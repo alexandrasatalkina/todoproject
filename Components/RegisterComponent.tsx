@@ -7,7 +7,7 @@ export default class Register extends Component {
     props:any
 
     static navigationOptions = {
-        title: 'Register',
+        title: 'Регистрация',
       }
     constructor(props:any) {
         super(props);

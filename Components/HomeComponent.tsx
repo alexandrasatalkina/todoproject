@@ -16,7 +16,13 @@ export default class Home extends Component {
     }
 
     static navigationOptions = {
-        title: 'Home',
+        title: 'Вход',
+      }
+
+      handleLogin(){
+          return(
+            this.props.navigation.navigate('Список')
+          )
       }
 
       render(){
@@ -34,10 +40,10 @@ export default class Home extends Component {
                     />
                 <View style={styles.formButton}>
                     <Button
-                    //onPress={() => this.handleLogin()}
+                    onPress={() => this.handleLogin()}
                     title="Вход"
                     buttonStyle={{
-                        backgroundColor: "#512DA8"
+                        backgroundColor: "#9370DB"
                     }}
                     />
                 </View>
@@ -46,7 +52,7 @@ export default class Home extends Component {
                     onPress={() => this.props.navigation.navigate('Регистрация')}
                     title="Регистрация"
                     titleStyle={{
-                        color: "blue"
+                        color: "#B0E0E6"
                     }}
                     />
                 </View>

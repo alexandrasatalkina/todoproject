@@ -11,6 +11,8 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import Register from './Components/RegisterComponent';
 import Home from './Components/HomeComponent';
+import Todo from './Components/TodoComponent';
+import AddTask from './Components/AddtaskComponent';
 import { createStackNavigator } from '@react-navigation/stack';
 
 
@@ -18,6 +20,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 type RootStackParamList = {
     Вход: any;
     Регистрация: any;
+    Список: any;
+    Создать: any;
   };
 
   
@@ -29,6 +33,8 @@ const StackNav = ()=> {
         <RootStack.Navigator initialRouteName="Вход">
           <RootStack.Screen name="Вход" component={Home} />
           <RootStack.Screen name="Регистрация" component={Register}/>
+          <RootStack.Screen name="Список" component={Todo}/>
+          <RootStack.Screen name="Создать" component={AddTask}/>
         </RootStack.Navigator>
     )
 }
