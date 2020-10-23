@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, ScrollView, Text, FlatList, TextInput} from 'react-native';
-import { ListItem, Button } from 'react-native-elements';
+import { View, StyleSheet,  Text,  TextInput} from 'react-native';
+import { Button } from 'react-native-elements';
 
 
 export default class AddTask extends Component {
@@ -12,6 +12,10 @@ export default class AddTask extends Component {
 
     constructor(props:any) {
         super(props);
+    }
+
+    handleExit(){
+        this.props.navigation.navigate('Список')
     }
     render(){
 
@@ -36,7 +40,7 @@ export default class AddTask extends Component {
                         />
                     <View style={styles.formButton}>
                         <Button
-                            //onPress={() => this.handleAddTask()}
+                            onPress={() => this.handleExit()}
                             title="Назад"
                             buttonStyle={{
                                 backgroundColor: "#9370DB"
@@ -45,7 +49,7 @@ export default class AddTask extends Component {
                     </View>
                     <View style={styles.formButton}>
                         <Button
-                            //onPress={() => this.handleExit()}
+                            //onPress={() => this.handleAddTask()}
                             title="Сохранить"
                             buttonStyle={{
                                 backgroundColor: "#6495ED"

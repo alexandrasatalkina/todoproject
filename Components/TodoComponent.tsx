@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, ScrollView, Text, FlatList} from 'react-native';
-import { ListItem, Button } from 'react-native-elements';
+import { View, StyleSheet, ScrollView, Text} from 'react-native';
+import {  Button } from 'react-native-elements';
 
 export default class Todo extends Component {
 
@@ -27,7 +27,11 @@ export default class Todo extends Component {
                     <Text style={styles.title}>
                         Список дел
                     </Text>
-                    
+                    <View>
+                        <Text></Text>
+                        <Button title="X" onPress={() => {}}/>
+                        <Button title="X" onPress={() => {}} />
+                    </View>
                     <View style={styles.formButton}>
                         <Button
                             onPress={() => this.handleAddTask()}
