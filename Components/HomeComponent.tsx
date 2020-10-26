@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
-import { View, StyleSheet} from 'react-native';
+import { View, StyleSheet, Alert} from 'react-native';
 import { Input,  Button} from 'react-native-elements';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-export default class Home extends Component {
-    props:any
+
+export default class Home extends Component <{}, { username: string, password: string}> {
+    props:any;
 
     constructor(props:any) {
         super(props);
+        this.getData();
 
         this.state = {
             username: '',
@@ -19,24 +22,57 @@ export default class Home extends Component {
         title: 'Вход',
       }
 
-      handleLogin(){
-          return(
-            this.props.navigation.navigate('Список')
-          )
+      handleLogin = async () => {
+            try {
+            const username = await AsyncStorage.getItem('username_'+this.state.username)
+            const password = await AsyncStorage.getItem('password_'+this.state.username)
+            if (this.state.username == username && this.state.password == password){
+                this.props.navigation.navigate('Список')
+                await AsyncStorage.setItem('default_name', this.state.username)
+                await AsyncStorage.setItem('default_password', this.state.password)
+             }
+             else {
+                 Alert.alert('Неверный логин или пароль!')
+             }
+          } catch (err) {
+              console.log(err)
+          }
       }
+
+      getData = async() => {
+          try {
+            const username = await AsyncStorage.getItem('default_name')
+            const password = await AsyncStorage.getItem('default_password')
+            console.log(username!==null)
+            if(username!==null){
+                this.setState({username})
+            }
+            if(password!==null){  
+            
+                this.setState({password})
+            }
+          }catch (err){
+                Alert.alert('Поля не заполнены!')
+          }
+      }
+      
+      
 
       render(){
         return (
             <View style={styles.container}>
                 <Input
                     placeholder="Ваше имя"
-                    //onChangeText={(username) => this.setState({username})}
-                    //value={this.state.username}
+                    onChangeText={(username) => this.setState({username})}
+                    value={this.state.username}
+                    autoCapitalize='none'
                     />
                 <Input
                     placeholder="Пароль"
-                    //onChangeText={(password) => this.setState({password})}
-                    //value={this.state.password}
+                    onChangeText={(password) => this.setState({password})}
+                    value={this.state.password}
+                    secureTextEntry={true}
+                    autoCapitalize='none'
                     />
                 <View style={styles.formButton}>
                     <Button

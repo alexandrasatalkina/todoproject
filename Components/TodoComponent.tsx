@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, ScrollView, Text} from 'react-native';
+import { View, StyleSheet, ScrollView, Text, Alert} from 'react-native';
 import {  Button } from 'react-native-elements';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 export default class Todo extends Component {
 
@@ -12,12 +14,29 @@ export default class Todo extends Component {
 
     constructor(props:any) {
         super(props);
+        
     }
+
 
 
     handleAddTask(){
         this.props.navigation.navigate('Создать')
     }
+
+    handleExit = async () => {
+            try {
+                await AsyncStorage.setItem('default_name', '')
+                await AsyncStorage.setItem('default_password', '')
+            } catch(e) {
+             
+            }
+          
+            Alert.alert('Вы вышли из личного кабинета')
+
+            //this.props.navigation.navigate('Вход')
+            this.props.navigation.push('Вход');
+          }
+    
     render(){
 
 
@@ -43,7 +62,7 @@ export default class Todo extends Component {
                     </View>
                     <View style={styles.formButton}>
                         <Button
-                            //onPress={() => this.handleExit()}
+                            onPress={() => this.handleExit()}
                             title="Выйти"
                             buttonStyle={{
                                 backgroundColor: "#87CEFA"

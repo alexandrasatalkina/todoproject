@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, ScrollView} from 'react-native';
+import { View, StyleSheet, ScrollView, Alert} from 'react-native';
 import { Input, Button} from 'react-native-elements';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-export default class Register extends Component {
+export default class Register extends Component <{}, { username: string, password: string, email: string, conferm: string}> {
     props:any
 
     static navigationOptions = {
@@ -20,6 +21,22 @@ export default class Register extends Component {
         }
     }
 
+
+
+    handleRegister = async () => {
+        try {
+          await AsyncStorage.multiSet([['username_'+this.state.username, this.state.username], ['password_'+ this.state.username, this.state.password], ['email_'+this.state.username, this.state.email], ['conferm_'+this.state.username, this.state.conferm]])
+          Alert.alert('Регистрация прошла успешно!')
+          await AsyncStorage.setItem('default_name', this.state.username)
+          await AsyncStorage.setItem('default_password', this.state.password)
+          this.props.navigation.navigate('Список')
+
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+
     render(){
         return(
             <ScrollView>
@@ -27,26 +44,32 @@ export default class Register extends Component {
                     <Input
                         placeholder="Ваше имя"
                         onChangeText={(username) => this.setState({username})}
-                        //value={this.state.username}
+                        value={this.state.username}
+                        autoCapitalize='none'
                         />
                     <Input
                         placeholder="Email"
                         onChangeText={(email) => this.setState({email})}
-                        //value={this.state.email}
+                        value={this.state.email}
+                        autoCapitalize='none'
                         />
                     <Input
                         placeholder="Пароль"
                         onChangeText={(password) => this.setState({password})}
-                        //value={this.state.password}
+                        value={this.state.password}
+                        secureTextEntry={true}
+                        autoCapitalize='none'
                         />
                     <Input
                         placeholder="Повтор пароля"
                         onChangeText={(conferm) => this.setState({conferm})}
-                        //value={this.state.conferm}
+                        value={this.state.conferm}
+                        secureTextEntry={true}
+                        autoCapitalize='none'
                         />
                     <View style={styles.formButton}>
                         <Button
-                            //onPress={() => this.handleRegister()}
+                            onPress={() => this.handleRegister()}
                             title="Регистрация"
                             buttonStyle={{
                                 backgroundColor: "#512DA8"
